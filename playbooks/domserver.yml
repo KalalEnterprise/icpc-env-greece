@@ -60,7 +60,10 @@
       MYSQL_USER: "{{ mysql_user }}"
       MYSQL_PASSWORD: "{{ mysql_password }}"
       MYSQL_DATABASE: "{{ mysql_database }}"
-    command: ["--max-connections={{ max_connections }}"]
+    command: 
+      - "--max-connections={{ max_connections }}"
+      - "--max-allowed-packet={{ mysql_max_allowed_packet }}"
+      - "--innodb-log-file-size={{ mysql_innodb_log_file_size }}"
 
 
 - name: Run DOMserver container with specified environment variables

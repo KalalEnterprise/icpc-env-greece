@@ -48,5 +48,10 @@ mysql_user: domjudge
 mysql_password: djpw
 max_connections: 1000
 mysql_database: domserver
+mysql_max_allowed_packet: 64M
+mysql_innodb_log_file_size: 128M
+
+nginx_client_max_body_size: 256M
+nginx_timeout: 300s
 
 auth_token: "1234"
