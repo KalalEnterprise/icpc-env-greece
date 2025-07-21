@@ -19,3 +19,10 @@
     state: present
     pkg:
     - pycharm-community
+
+- name: install CLion
+  when: "'intellij-clion' in devtools"
+  apt:
+    state: present
+    pkg:
+    - clion

@@ -25,6 +25,7 @@ devtools:
   - vscode
   - intellij-idea
   - intellij-pycharm
+  - intellij-clion
   - netbeans
 
 vscode_extensions:
