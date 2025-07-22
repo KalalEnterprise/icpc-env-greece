@@ -48,11 +48,11 @@ cd icpc-env-greece
     ```
   * Download the 64 bit version of Ubuntu 22.04.2 Server inside the cloned directory:
     ```bash
-    curl -O https://old-releases.ubuntu.com/releases/jammy/ubuntu-22.04.2-live-server-amd64.iso
+    curl -O https://releases.ubuntu.com/releases/jammy/ubuntu-22.04.5-live-server-amd64.iso
     ```
   * Download the 64 bit version of eclipse into the `files/` directory:
     ```bash
-    cd files && curl -O https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2023-06/R/eclipse-java-2024-09-R-linux-gtk-x86_64.tar.gz
+    cd files && curl -O  https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2025-09/M1/eclipse-java-2025-09-M1-linux-gtk-x86_64.tar.gz
     ```
 
   * Download Kotlin zip into the 'files/' directory
