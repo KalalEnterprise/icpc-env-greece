@@ -52,7 +52,7 @@ cd icpc-env-greece
     ```
   * Download the 64 bit version of eclipse into the `files/` directory:
     ```bash
-    cd files && curl -O https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2023-06/R/eclipse-java-2024-09-R-linux-gtk-x86_64.tar.gz
+    cd files && curl -O  https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2025-09/M1/eclipse-java-2025-09-M1-linux-gtk-x86_64.tar.gz
 
 1. Run secrets/gen-secrets.sh to create some ssh keys/other secret data. Follow this with ./fetch-secrets.sh to put them in the right place for ansible. Pass the ID of the contest as an argument on both scripts.
 ```bash
