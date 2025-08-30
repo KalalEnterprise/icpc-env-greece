@@ -21,7 +21,7 @@
 
 - name: libc reference docs
   unarchive:
-    src: https://www.gnu.org/software/libc/manual/html_node/libc-html_node.tar.gz
+    src: https://snapshots.sourceware.org/glibc/trunk/latest/manual/libc-html_node.tar.xz
     dest: /opt/libc-manual
     remote_src: true # to get it to download from the internet
 
