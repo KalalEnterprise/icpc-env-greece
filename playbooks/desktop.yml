@@ -1,0 +1,21 @@
+- name: Ensure DesktopTemplates directory exists
+  file:
+    path: /root/DesktopTemplates
+    state: directory
+    mode: '0755'
+
+- name: Create desktop shortcut templates
+  copy:
+    dest: "/root/DesktopTemplates/{{ item.name }}.desktop"
+    mode: '0755'
+    content: |
+      [Desktop Entry]
+      Name={{ item.name }}
+      Exec={{ item.exec }}
+      Icon={{ item.icon }}
+      Type=Application
+      Terminal=false
+  loop:
+    - { name: 'VS Code', exec: 'code --new-window %F', icon: 'code' }
+    - { name: 'Firefox', exec: 'firefox %u', icon: 'firefox' }
+    - { name: 'Guide', exec: 'firefox /htmlfile/documentHtml/index.html', icon: 'firefox' }

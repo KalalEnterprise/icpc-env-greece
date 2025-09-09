@@ -22,3 +22,12 @@ rm -rf /home/contestant
 echo "Recreating contestant user"
 useradd -d /home/contestant -m contestant -G lpadmin -s /bin/bash
 passwd -d contestant
+
+# Recreate Desktop folder and copy shortcuts
+mkdir -p /home/contestant/Desktop
+# Copy templates (replace /root/DesktopTemplates with your actual template location)
+cp /root/DesktopTemplates/*.desktop /home/contestant/Desktop/
+
+# Set correct ownership
+chown -R contestant:contestant /home/contestant/Desktop
+chmod +x /home/contestant/Desktop/*.desktop

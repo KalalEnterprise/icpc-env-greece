@@ -22,6 +22,11 @@
         src: files/Xresources
         dest: /etc/skel/.Xresources
 
+    - name: copy DocumentationHTML
+      copy:
+        src: files/documentHtml
+        dest: /htmlfile/
+
     - name: ensure Xresources is merged on session start (.xsessionrc)
       copy:
         dest: /etc/skel/.xsessionrc
@@ -101,6 +106,7 @@
     - import_tasks: 'playbooks/icpc.yml'
     - import_tasks: 'playbooks/vmtouch.yml'
     - import_tasks: 'playbooks/system.yml'
+    - import_tasks: 'playbooks/desktop.yml'
 
     - import_tasks: 'playbooks/firewall.yaml'
 
