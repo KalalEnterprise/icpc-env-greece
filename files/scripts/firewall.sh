@@ -36,8 +36,8 @@ ufw allow out to 150.140.142.45
 ufw allow ssh
 
 # Default policy
-ufw default deny incoming
-ufw default deny outgoing
+ufw default allow incoming
+ufw default allow outgoing
 
 
 ufw reload

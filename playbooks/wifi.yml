@@ -1,0 +1,23 @@
+- name: Install NetworkManager and GUI applet
+  ansible.builtin.apt:
+    name:
+      - network-manager
+      - network-manager-gnome   # GUI WiFi icon
+    state: present
+    update_cache: yes
+
+- name: Ensure NetworkManager service is enabled and running
+  ansible.builtin.systemd:
+    name: NetworkManager
+    enabled: yes
+    state: started
+
+- name: Autostart the NetworkManager applet for all users (optional)
+  ansible.builtin.copy:
+    dest: /etc/xdg/autostart/nm-applet.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Network Manager
+      Exec=nm-applet
+      X-GNOME-Autostart-enabled=true
