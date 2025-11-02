@@ -1,0 +1,99 @@
+---
+- name: Create jetbrains-ides directory
+  file:
+    path: /opt/jetbrains
+    state: directory
+    mode: '0755'
+  become: yes
+
+# Extract IDEs
+- name: Extract IntelliJ Community IDEA
+  unarchive:
+    src: "files/ideaIC-{{ intellij_version }}.tar.gz" 
+    dest: /opt/jetbrains/
+    creates: /opt/jetbrains/idea
+  become: yes
+
+- name: Extract PyCharm
+  unarchive:
+    src: "files/pycharm-{{ pycharm_version }}.tar.gz"
+    dest: /opt/jetbrains 
+    creates: /opt/jetbrains/pycharm
+  become: yes
+
+- name: Extract CLion
+  unarchive:
+    src: "files/CLion-{{ clion_version }}.tar.gz"
+    dest: /opt/jetbrains 
+    creates: /opt/jetbrains/clion
+  become: yes
+
+# Add IDEs to path
+- name: Find IntelliJ IDEA directory
+  find:
+    paths: /opt/jetbrains
+    patterns: 'ideaIC-*'
+    file_type: directory
+  register: idea_dir
+  become: yes
+
+- name: Find PyCharm directory
+  find:
+    paths: /opt/jetbrains
+    patterns: 'pycharm-*'
+    file_type: directory
+  register: pycharm_dir
+  become: yes
+
+- name: Find CLion directory
+  find:
+    paths: /opt/jetbrains
+    patterns: 'CLion-*'
+    file_type: directory
+  register: clion_dir
+  become: yes
+
+- name: Create links for terminal access
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - { src: "{{ idea_dir.files | last | attr('path') }}/bin/idea.sh", dest: '/usr/local/bin/idea' }
+    - { src: "{{ pycharm_dir.files | last | attr('path') }}/bin/pycharm.sh", dest: '/usr/local/bin/pycharm' }
+    - { src: "{{ clion_dir.files | last | attr('path') }}/bin/clion.sh", dest: '/usr/local/bin/clion' }
+  become: yes
+  when: idea_dir.files | length > 0 and pycharm_dir.files | length > 0 and clion_dir.files | length > 0
+
+# Create desktop entries
+- name: Create IntelliJ IDEA desktop entry
+  template:
+    src: intellij-idea.desktop.j2
+    dest: /usr/share/applications/intellij-idea.desktop
+    mode: '0644'
+  become: yes
+
+- name: Create PyCharm desktop entry
+  template:
+    src: pycharm.desktop.j2
+    dest: /usr/share/applications/pycharm.desktop
+    mode: '0644'
+  become: yes
+
+- name: Create CLion desktop entry
+  template:
+    src: clion.desktop.j2
+    dest: /usr/share/applications/clion.desktop
+    mode: '0644'
+  become: yes
+
+# CLion license
+- name: Add CLion license
+  copy:
+    content: "{{ clion_license_key }}"
+    dest: "{{ clion_dir.files | last | attr('path') }}/bin/clion.license"
+    mode: '0644'
+  become: yes
+  when:
+    - clion_license_key is defined
+    - clion_dir.files | lenght > 0

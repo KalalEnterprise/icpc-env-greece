@@ -32,8 +32,9 @@
 
   - include_tasks: 'devel_tools/eclipse.yaml'
     when: "'eclipse' in devtools"
-
-  - include_tasks: 'devel_tools/intellij.yaml'
+  - name: Import JetBrains role
+    import_role:
+      name: 'jetbrains_ides'
     when: ('intellij-idea' in devtools) or ('intellij-clion' in devtools) or ('intellij-pycharm' in devtools)
 
   
