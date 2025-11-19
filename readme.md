@@ -105,3 +105,48 @@ functions.
 Once you have ansible performing all the tasks you need, halt the vm, then
 continue with the `build-final.sh` script. You should never use an image created
 by the `runvm.sh` script, always build images using `build-final.sh`
+
+## DOMjudge Configuration
+
+To ensure consistency between the contestant environment and judging system, configure DOMjudge with these exact compiler flags:
+
+### languages.yaml Configuration
+
+```yaml
+c:
+  name: "C"
+  extensions: ["c"]
+  compile_script: "gcc -x c -g -O2 -std=gnu11 -static -o $DEST $SOURCES -lm"
+  
+cpp:
+  name: "C++"
+  extensions: ["cc", "cpp", "cxx", "c++"]
+  compile_script: "g++ -x c++ -g -O2 -std=gnu++20 -static -o $DEST $SOURCES"
+  
+java:
+  name: "Java"
+  extensions: ["java"]
+  compile_script: "javac -encoding UTF-8 -sourcepath . -d . $SOURCES"
+  run_script: "java -Dfile.encoding=UTF-8 -XX:+UseSerialGC -Xss64m -Xms{memlim}m -Xmx{memlim}m $MAINCLASS"
+  
+kotlin:
+  name: "Kotlin"
+  extensions: ["kt"]
+  compile_script: "kotlinc -d . $SOURCES"
+  run_script: "kotlin -Dfile.encoding=UTF-8 -J-XX:+UseSerialGC -J-Xss64m -J-Xms{memlim}m -J-Xmx{memlim}m $MAINCLASS"
+  
+python3:
+  name: "Python 3"
+  extensions: ["py"]
+  run_script: "pypy3 $MAINFILE"  # Use PyPy3, not CPython
+```
+
+### Compiler Versions
+
+The contestant environment now includes:
+- **Java**: OpenJDK 21 (updated from 11 to match ICPC 2025 standards)
+- **Kotlin**: Version 1.9.24 (updated from 1.7.10)
+- **C/C++**: gcc/g++ 13.x (installed from ubuntu-toolchain-r PPA to match ICPC 2025 standards)
+- **Python**: PyPy3 (primary interpreter for judging)
+
+**Note**: GCC/G++ 13 is installed from the ubuntu-toolchain-r PPA and set as the default compiler to ensure ICPC 2025 compliance.
